@@ -1,151 +1,137 @@
 <!-- Update the title to match the module name and add a description -->
-# Terraform IBM Module Template
+# Terraform IBM ICSE Key Management Module
+
+This module allows users to create and manage keys, key rings, and key policies in a HPCS or Key Protect Instance. This module is designed to be used as part of a larger architecture.
+
+---
 
 <!-- UPDATE BADGE: Update the link for the badge below-->
 [![Build Status](https://github.com/terraform-ibm-modules/terraform-ibm-module-template/actions/workflows/ci.yml/badge.svg)](https://github.com/terraform-ibm-modules/terraform-ibm-module-template/actions/workflows/ci.yml)
 [![semantic-release](https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg)](https://github.com/semantic-release/semantic-release)
 [![pre-commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit&logoColor=white)](https://github.com/pre-commit/pre-commit)
 
-<!-- Remove the content in this H2 heading after completing the steps -->
+---
 
-## Submit a new module
+## Table of Contents
 
-:+1::tada: Thank you for taking the time to contribute! :tada::+1:
+1. [Usage](#usage)
+1. [Examples](#examples)
+1. [Modules](#modules)
+1. [Key Management Instance Types](#key-management-instance-types)
+1. [Resources](#resources)
+1. [Inputs](#inputs)
+1. [Outputs](#outputs)
+1. [Contributing](#contributing)
 
-This template repository exists to help you create Terraform modules for IBM Cloud.
+---
 
-The default structure includes the following files:
-
-- `README.md`: A description of the module
-- `main.tf`: The logic for the module
-- `version.tf`: The required terraform and provider versions
-- `variables.tf`: The input variables for the module
-- `outputs.tf`: The values that are output from the module
-
-For more information, see [Module structure](https://terraform-ibm-modules.github.io/documentation/#/module-structure) in the project documentation.
-
-You can add other content to support what your module does and how it works. For example, you might add a `scripts/` directory that contains shell scripts that are run by a `local-exec` `null_resource` in the Terraform module.
-
-Follow this process to create and submit a Terraform module.
-
-### Create a repo from this repo template
-
-1.  Create a repository from this repository template by clicking `Use this template` in the upper right of the GitHub UI.
-
-    For more information about creating a repository from a template, see the [GitHub docs](https://docs.github.com/en/repositories/creating-and-managing-repositories/creating-a-repository-from-a-template).
-1.  Select `terraform-ibm-modules` as the owner.
-1.  Enter a name for the module in format `terraform-ibm-<NAME>`, where `<NAME>` reflects the type of infrastructure that the module manages.
-
-    Use hyphens as delimiters for names with multiple words (for example, terraform-ibm-`activity-tracker`).
-1.  Provide a short description of the module.
-
-    The description is displayed under the repository title on the [organization page](https://github.com/terraform-ibm-modules) and in the **About** section of the repository. Use the description to help users understand what your repo does by looking at the description.
-
-### Clone the repo and set up your development environment
-
-Locally clone the new repository and set up your development environment by completing the tasks in [Local development setup](https://terraform-ibm-modules.github.io/documentation/#/local-dev-setup) in the project documentation.
-
-### Update the Terraform files
-
-Implement the logic for your module by updating the `main.tf`, `version.tf`, `variables.tf`, and `outputs.tf` Terraform files. For more information, see [Creating Terraform on IBM Cloud templates](https://cloud.ibm.com/docs/ibm-cloud-provider-for-terraform?topic=ibm-cloud-provider-for-terraform-create-tf-config).
-
-### Create examples and tests
-
-Add one or more examples in the `examples` directory that consume your new module, and configure tests for them in the `tests` directory.
-
-### Update the content in the readme file
-
-After you implement the logic for your module and create examples and tests, update this readme file in your repository by following these steps:
-
-1.  Update the title heading and add a description about your module.
-1.  Update the badge links.
-1.  Remove all the content in this H2 heading section.
-1.  Complete the [Usage](#usage), [Required IAM access policies](#required-iam-access-policies), and [Examples](#examples) sections. The [Requirements](#requirements) section is populated by a pre-commit hook.
-
-### Commit your code and submit your module for review
-
-1.  Before you commit any code, review [Contributing to the IBM Cloud Terraform modules project](https://terraform-ibm-modules.github.io/documentation/#/contribute-module) in the project documentation.
-1.  Create a pull request for review.
-
-### Post-merge steps
-After the first PR for your module is merged, follow these post-merge steps:
-
-1.  Create a PR to enable the upgrade test by removing the `t.Skip` line in `tests/pr_test.go`.
+<!-- 1.  Create a PR to enable the upgrade test by removing the `t.Skip` line in `tests/pr_test.go`. -->
 
 <!-- Remove the content in this previous H2 heading -->
 
 ## Usage
 
-<!--
-Add an example of the use of the module in the following code block.
-
-Use real values instead of "var.<var_name>" or other placeholder values
-unless real values don't help users know what to change.
--->
-
-```hcl
-
+```terraform
+module icse-key-management {
+  source                    = "github.com/terraform-ibm-modules/terraform-ibm-icse-key-management-module"
+  region                    = "us-south"
+  prefix                    = "my-prefix"
+  tags                      = ["icse", "cloud-services"]
+  resource_group_id         = "<your resource group id>"
+  service_endpoints         = "public"
+  authorize_vpc_reader_role = var.authorize_vpc_reader_role
+  keys                      = [
+    {
+      key_ring = "at-test-slz-ring"
+      name     = "at-test-slz-key"
+      root_key = true
+    },
+    {
+      key_ring = "at-test-slz-ring"
+      name     = "at-test-atracker-key"
+      root_key = true
+    },
+    {
+      key_ring = "at-test-slz-ring"
+      name     = "at-test-vsi-volume-key"
+      root_key = true
+    },
+  ]
+}
 ```
 
-## Required IAM access policies
+---
 
-<!-- PERMISSIONS REQUIRED TO RUN MODULE
-If this module requires permissions, uncomment the following block and update
-the sample permissions, following the format.
-Replace the sample Account and IBM Cloud service names and roles with the
-information in the console at
-Manage > Access (IAM) > Access groups > Access policies.
--->
-
-<!--
-You need the following permissions to run this module.
-
-- Account Management
-    - **Sample Account Service** service
-        - `Editor` platform access
-        - `Manager` service access
-- IAM Services
-    - **Sample Cloud Service** service
-        - `Administrator` platform access
--->
-
-<!-- NO PERMISSIONS FOR MODULE
-If no permissions are required for the module, uncomment the following
-statement instead the previous block.
--->
-
-<!-- No permissions are needed to run this module.-->
-
-<!-- BEGIN EXAMPLES HOOK -->
 ## Examples
 
-- [ Default example](examples/default)
-- [ Example that uses existing resources](examples/existing-resources)
-- [ Non default example](examples/non-default)
-<!-- END EXAMPLES HOOK -->
+- [Default example](examples/basic)
 
-<!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
+---
+
 ## Requirements
 
 | Name | Version |
 |------|---------|
-| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.0.0 |
+| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >=1.0 |
+| <a name="requirement_ibm"></a> [ibm](#requirement\_ibm) | >=1.43.0 |
+
+---
 
 ## Modules
 
-No modules.
+| Name | Source | Version |
+|------|--------|---------|
+| <a name="module_key_map"></a> [key\_map](#module\_key\_map) | ./config_modules/list_to_map | n/a |
+| <a name="module_policies_map"></a> [policies\_map](#module\_policies\_map) | ./config_modules/list_to_map | n/a |
+
+---
+
+## Key Management Instance Types
+
+This module supports these three patterns for a key management instance:
+- Use an intialized Hyper Protect Crypto Services. (For more information about HPCS see the documentation [here](https://cloud.ibm.com/docs/hs-crypto?topic=hs-crypto-get-started).)
+- Use an existing Key Protect Instance
+- Create a New Key Protect instance
+
+---
 
 ## Resources
 
-No resources.
+| Name | Type |
+|------|------|
+| [ibm_iam_authorization_policy.block_storage_policy](https://registry.terraform.io/providers/IBM-Cloud/ibm/latest/docs/resources/iam_authorization_policy) | resource |
+| [ibm_iam_authorization_policy.server_protect_policy](https://registry.terraform.io/providers/IBM-Cloud/ibm/latest/docs/resources/iam_authorization_policy) | resource |
+| [ibm_kms_key.key](https://registry.terraform.io/providers/IBM-Cloud/ibm/latest/docs/resources/kms_key) | resource |
+| [ibm_kms_key_policies.key_policy](https://registry.terraform.io/providers/IBM-Cloud/ibm/latest/docs/resources/kms_key_policies) | resource |
+| [ibm_kms_key_rings.rings](https://registry.terraform.io/providers/IBM-Cloud/ibm/latest/docs/resources/kms_key_rings) | resource |
+| [ibm_resource_instance.kms](https://registry.terraform.io/providers/IBM-Cloud/ibm/latest/docs/resources/resource_instance) | resource |
+| [ibm_resource_instance.hpcs_instance](https://registry.terraform.io/providers/IBM-Cloud/ibm/latest/docs/data-sources/resource_instance) | data source |
+| [ibm_resource_instance.kms](https://registry.terraform.io/providers/IBM-Cloud/ibm/latest/docs/data-sources/resource_instance) | data source |
 
 ## Inputs
 
-No inputs.
+| Name | Description | Type | Default | Required |
+|------|-------------|------|---------|:--------:|
+| <a name="input_authorize_vpc_reader_role"></a> [authorize\_vpc\_reader\_role](#input\_authorize\_vpc\_reader\_role) | Create a service authorization to allow the key management service created by this module Reader role for IAM access to VPC block storage resources. This allows for block storage volumes for VPC to be encrypted using keys from the key management service | `bool` | `true` | no |
+| <a name="input_keys"></a> [keys](#input\_keys) | List of keys to be created for the service | <pre>list(<br>    object({<br>      name            = string<br>      root_key        = optional(bool)<br>      payload         = optional(string)<br>      key_ring        = optional(string) # Any key_ring added will be created<br>      force_delete    = optional(bool)<br>      endpoint        = optional(string) # can be public or private<br>      iv_value        = optional(string) # (Optional, Forces new resource, String) Used with import tokens. The initialization vector (IV) that is generated when you encrypt a nonce. The IV value is required to decrypt the encrypted nonce value that you provide when you make a key import request to the service. To generate an IV, encrypt the nonce by running ibmcloud kp import-token encrypt-nonce. Only for imported root key.<br>      encrypted_nonce = optional(string) # The encrypted nonce value that verifies your request to import a key to Key Protect. This value must be encrypted by using the key that you want to import to the service. To retrieve a nonce, use the ibmcloud kp import-token get command. Then, encrypt the value by running ibmcloud kp import-token encrypt-nonce. Only for imported root key.<br>      policies = optional(<br>        object({<br>          rotation = optional(<br>            object({<br>              interval_month = number<br>            })<br>          )<br>          dual_auth_delete = optional(<br>            object({<br>              enabled = bool<br>            })<br>          )<br>        })<br>      )<br>    })<br>  )</pre> | <pre>[<br>  {<br>    "key_ring": "at-test-slz-ring",<br>    "name": "at-test-slz-key",<br>    "root_key": true<br>  },<br>  {<br>    "key_ring": "at-test-slz-ring",<br>    "name": "at-test-atracker-key",<br>    "root_key": true<br>  },<br>  {<br>    "key_ring": "at-test-slz-ring",<br>    "name": "at-test-vsi-volume-key",<br>    "root_key": true<br>  }<br>]</pre> | no |
+| <a name="input_name"></a> [name](#input\_name) | Name of the service to create or find from data. Created service instances will include the prefix. | `string` | `"kms"` | no |
+| <a name="input_prefix"></a> [prefix](#input\_prefix) | The prefix that you would like to append to your resources | `string` | n/a | yes |
+| <a name="input_region"></a> [region](#input\_region) | The region to which to deploy the VPC | `string` | n/a | yes |
+| <a name="input_resource_group_id"></a> [resource\_group\_id](#input\_resource\_group\_id) | Resource group ID to use for provision of resources or to find existing resources. | `string` | `null` | no |
+| <a name="input_service_endpoints"></a> [service\_endpoints](#input\_service\_endpoints) | Service endpoints. Can be `public`, `private`, or `public-and-private` | `string` | `"private"` | no |
+| <a name="input_tags"></a> [tags](#input\_tags) | List of Tags for the resource created | `list(string)` | `null` | no |
+| <a name="input_use_data"></a> [use\_data](#input\_use\_data) | Use existing Key Protect instance. | `bool` | `false` | no |
+| <a name="input_use_hs_crypto"></a> [use\_hs\_crypto](#input\_use\_hs\_crypto) | Use HyperProtect Crypto Services. HPCS cannot be initialized in this module. | `bool` | `false` | no |
 
 ## Outputs
 
-No outputs.
+| Name | Description |
+|------|-------------|
+| <a name="output_key_management_crn"></a> [key\_management\_crn](#output\_key\_management\_crn) | CRN for KMS instance |
+| <a name="output_key_management_guid"></a> [key\_management\_guid](#output\_key\_management\_guid) | GUID for KMS instance |
+| <a name="output_key_management_name"></a> [key\_management\_name](#output\_key\_management\_name) | Name of key management service |
+| <a name="output_key_rings"></a> [key\_rings](#output\_key\_rings) | Key rings created by module |
+| <a name="output_keys"></a> [keys](#output\_keys) | List of names and ids for keys created. |
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 
 <!-- Leave this section as is so that your module has a link to local development environment set up steps for contributors to follow -->
@@ -155,3 +141,9 @@ No outputs.
 You can report issues and request features for this module in the [terraform-ibm-issue-tracker](https://github.com/terraform-ibm-modules/terraform-ibm-issue-tracker/issues) repo. See [Report an issue or request a feature](https://github.com/terraform-ibm-modules/.github/blob/main/.github/SUPPORT.md).
 
 To set up your local development environment, see [Local development setup](https://terraform-ibm-modules.github.io/documentation/#/local-dev-setup) in the project documentation.
+
+<!-- BEGIN EXAMPLES HOOK -->
+## Examples
+
+- [ Default example](examples/basic)
+<!-- END EXAMPLES HOOK -->
