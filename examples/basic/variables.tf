@@ -2,6 +2,12 @@
 # Account Variables
 ##############################################################################
 
+variable "ibmcloud_api_key" {
+  description = "The IBM Cloud platform API key needed to deploy IAM enabled resources."
+  type        = string
+  sensitive   = true
+}
+
 variable "region" {
   description = "The region to which to deploy the VPC"
   type        = string
@@ -137,6 +143,24 @@ variable "keys" {
       ] : true if kms_key.policies.rotation.interval_month < 1 || kms_key.policies.rotation.interval_month > 12
     ]) == 0
   }
+}
+
+##############################################################################
+
+##############################################################################
+# forced variables
+##############################################################################
+
+variable "resource_group" {
+  description = "Mandatory value unused by this module"
+  type        = string
+  default     = null
+}
+
+variable "resource_tags" {
+  description = "Mandatory value unused by this module"
+  type        = list(string)
+  default     = null
 }
 
 ##############################################################################
