@@ -1,22 +1,55 @@
-/********************************************************************
+##############################################################################
+# Key Management Outputs
+##############################################################################
 
-This file is used to capture ROOT module outputs.
-
-E.g:
-
-output "at_id" {
-  description = "Activity tracker id"
-  value       = concat(ibm_resource_instance.at_instance.*.id, [""])[0]
+output "key_management_name" {
+  description = "Name of key management service"
+  value       = local.key_management_instance.name
 }
 
-output "at_guid" {
-  description = "The GUID of the activity tracker"
-  value       = concat(ibm_resource_instance.at_instance.*.guid, [""])[0]
+output "key_management_crn" {
+  description = "CRN for KMS instance"
+  value       = local.key_management_crn
 }
 
-output "at_key_id" {
-  description = "Activity tracker key id"
-  value       = concat(ibm_resource_key.activity_tracker_key.*.id, [""])[0]
+output "key_management_guid" {
+  description = "GUID for KMS instance"
+  value       = local.key_management_guid
+  depends_on = [
+    ibm_iam_authorization_policy.server_protect_policy,
+    ibm_iam_authorization_policy.block_storage_policy
+  ]
 }
 
-*********************************************************************/
+##############################################################################
+
+##############################################################################
+# Key Rings
+##############################################################################
+
+output "key_rings" {
+  description = "Key rings created by module"
+  value       = ibm_kms_key_rings.rings
+}
+
+##############################################################################
+
+##############################################################################
+# Keys
+##############################################################################
+
+output "keys" {
+  description = "List of names and ids for keys created."
+  value = [
+    for kms_key in var.keys :
+    {
+      shortname = kms_key.name
+      name      = ibm_kms_key.key[kms_key.name].key_name
+      id        = ibm_kms_key.key[kms_key.name].id
+      crn       = ibm_kms_key.key[kms_key.name].crn
+      key_id    = ibm_kms_key.key[kms_key.name].key_id
+    }
+  ]
+}
+
+##############################################################################
