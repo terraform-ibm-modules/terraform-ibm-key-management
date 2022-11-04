@@ -33,7 +33,7 @@ This module allows users to create and manage keys, key rings, and key policies 
 
 ```terraform
 module icse-key-management {
-  source                    = "github.com/terraform-ibm-modules/terraform-ibm-icse-key-management-module"
+  source                    = "github.com/terraform-ibm-modules/terraform-ibm-icse-key-management"
   region                    = "us-south"
   prefix                    = "my-prefix"
   tags                      = ["icse", "cloud-services"]
