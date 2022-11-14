@@ -1,39 +1,29 @@
+<!-- BEGIN MODULE HOOK -->
+
 <!-- Update the title to match the module name and add a description -->
-# Terraform IBM ICSE Key Management Module
-
-This module allows users to create and manage keys, key rings, and key policies in a HPCS or Key Protect Instance. This module is designed to be used as part of a larger architecture.
-
----
+# Terraform IBM ICSE Key Management module
 
 <!-- UPDATE BADGE: Update the link for the badge below-->
 [![Build Status](https://github.com/terraform-ibm-modules/terraform-ibm-module-template/actions/workflows/ci.yml/badge.svg)](https://github.com/terraform-ibm-modules/terraform-ibm-module-template/actions/workflows/ci.yml)
 [![semantic-release](https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg)](https://github.com/semantic-release/semantic-release)
 [![pre-commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit&logoColor=white)](https://github.com/pre-commit/pre-commit)
 
----
+This module creates and manages keys, key rings, and key policies in IBM Hyper Protect Crypto Services or a Key Protect instance. This module is designed to be used as part of a larger architecture.
 
-## Table of Contents
+## Key management instance patterns
 
-1. [Usage](#usage)
-1. [Examples](#examples)
-1. [Modules](#modules)
-1. [Key Management Instance Types](#key-management-instance-types)
-1. [Resources](#resources)
-1. [Inputs](#inputs)
-1. [Outputs](#outputs)
-1. [Contributing](#contributing)
+This module supports these three patterns for a key management instance.
 
----
-
-<!-- 1.  Create a PR to enable the upgrade test by removing the `t.Skip` line in `tests/pr_test.go`. -->
-
-<!-- Remove the content in this previous H2 heading -->
+- Use initialized Hyper Protect Crypto Services. For more information about HPCS, see [Getting started with IBM Cloud Hyper Protect Crypto Services](https://cloud.ibm.com/docs/hs-crypto?topic=hs-crypto-get-started).
+- Use an existing Key Protect instance.
+- Create a new Key Protect instance.
 
 ## Usage
 
 ```terraform
 module icse-key-management {
-  source                    = "github.com/terraform-ibm-modules/terraform-ibm-icse-key-management-module"
+  # Replace "main" with a GIT release version to lock into a specific release
+  source                    = "git::https://github.com/terraform-ibm-modules/terraform-ibm-icse-key-management-module.git?ref=main"
   region                    = "us-south"
   prefix                    = "my-prefix"
   tags                      = ["icse", "cloud-services"]
@@ -60,14 +50,48 @@ module icse-key-management {
 }
 ```
 
----
+<!-- PERMISSIONS REQUIRED TO RUN MODULE
 
+If this module requires permissions, uncomment the following block and update
+the sample permissions, following the format.
+Replace the sample Account and IBM Cloud service names and roles with the
+information in the console at
+Manage > Access (IAM) > Access groups > Access policies.
+-->
+
+<!--
+## Required IAM access policies
+
+You need the following permissions to run this module.
+
+- Account Management
+    - **Sample Account Service** service
+        - `Editor` platform access
+        - `Manager` service access
+    - IAM Services
+        - **Sample Cloud Service** service
+            - `Administrator` platform access
+-->
+
+<!-- NO PERMISSIONS FOR MODULE
+If no permissions are required for the module, uncomment the following
+statement instead the previous block.
+-->
+
+<!--
+## Required IAM access policies
+
+No permissions are needed to run this module.
+-->
+
+<!-- END MODULE HOOK -->
+
+<!-- BEGIN EXAMPLES HOOK -->
 ## Examples
 
-- [Default example](examples/basic)
-
----
-
+- [ Default example](examples/default)
+<!-- END EXAMPLES HOOK -->
+<!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 ## Requirements
 
 | Name | Version |
@@ -75,25 +99,12 @@ module icse-key-management {
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >=1.0 |
 | <a name="requirement_ibm"></a> [ibm](#requirement\_ibm) | >=1.43.0 |
 
----
-
 ## Modules
 
 | Name | Source | Version |
 |------|--------|---------|
 | <a name="module_key_map"></a> [key\_map](#module\_key\_map) | ./config_modules/list_to_map | n/a |
 | <a name="module_policies_map"></a> [policies\_map](#module\_policies\_map) | ./config_modules/list_to_map | n/a |
-
----
-
-## Key Management Instance Types
-
-This module supports these three patterns for a key management instance:
-- Use an intialized Hyper Protect Crypto Services. (For more information about HPCS see the documentation [here](https://cloud.ibm.com/docs/hs-crypto?topic=hs-crypto-get-started).)
-- Use an existing Key Protect Instance
-- Create a New Key Protect instance
-
----
 
 ## Resources
 
@@ -133,17 +144,13 @@ This module supports these three patterns for a key management instance:
 | <a name="output_key_rings"></a> [key\_rings](#output\_key\_rings) | Key rings created by module |
 | <a name="output_keys"></a> [keys](#output\_keys) | List of names and ids for keys created. |
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
+<!-- BEGIN CONTRIBUTING HOOK -->
 
 <!-- Leave this section as is so that your module has a link to local development environment set up steps for contributors to follow -->
-
 ## Contributing
 
-You can report issues and request features for this module in the [terraform-ibm-issue-tracker](https://github.com/terraform-ibm-modules/terraform-ibm-issue-tracker/issues) repo. See [Report an issue or request a feature](https://github.com/terraform-ibm-modules/.github/blob/main/.github/SUPPORT.md).
+You can report issues and request features for this module in GitHub issues in the module repo. See [Report an issue or request a feature](https://github.com/terraform-ibm-modules/.github/blob/main/.github/SUPPORT.md).
 
 To set up your local development environment, see [Local development setup](https://terraform-ibm-modules.github.io/documentation/#/local-dev-setup) in the project documentation.
-
-<!-- BEGIN EXAMPLES HOOK -->
-## Examples
-
-- [ Default example](examples/default)
-<!-- END EXAMPLES HOOK -->
+<!-- Source for this readme file: https://github.com/terraform-ibm-modules/common-dev-assets/tree/main/module-assets/ci/module-template-automation -->
+<!-- END CONTRIBUTING HOOK -->
