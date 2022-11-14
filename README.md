@@ -14,14 +14,18 @@ This module allows users to create and manage keys, key rings, and key policies 
 
 ## Table of Contents
 
-1. [Usage](#usage)
-1. [Examples](#examples)
-1. [Modules](#modules)
-1. [Key Management Instance Types](#key-management-instance-types)
-1. [Resources](#resources)
-1. [Inputs](#inputs)
-1. [Outputs](#outputs)
-1. [Contributing](#contributing)
+- [Terraform IBM ICSE Key Management Module](#terraform-ibm-icse-key-management-module)
+  - [Table of Contents](#table-of-contents)
+  - [Usage](#usage)
+  - [Examples](#examples)
+  - [Requirements](#requirements)
+  - [Modules](#modules)
+  - [Key Management Instance Types](#key-management-instance-types)
+  - [Resources](#resources)
+  - [Inputs](#inputs)
+  - [Outputs](#outputs)
+  - [Contributing](#contributing)
+  - [Examples](#examples-1)
 
 ---
 
@@ -72,7 +76,7 @@ module icse-key-management {
 
 | Name | Version |
 |------|---------|
-| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >=1.0 |
+| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >=1.3.0 |
 | <a name="requirement_ibm"></a> [ibm](#requirement\_ibm) | >=1.43.0 |
 
 ---
