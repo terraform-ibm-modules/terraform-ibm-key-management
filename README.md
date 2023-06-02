@@ -4,9 +4,10 @@
 # Terraform IBM ICSE Key Management module
 
 <!-- UPDATE BADGE: Update the link for the badge below-->
-[![Build Status](https://github.com/terraform-ibm-modules/terraform-ibm-module-template/actions/workflows/ci.yml/badge.svg)](https://github.com/terraform-ibm-modules/terraform-ibm-module-template/actions/workflows/ci.yml)
 [![semantic-release](https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg)](https://github.com/semantic-release/semantic-release)
 [![pre-commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit&logoColor=white)](https://github.com/pre-commit/pre-commit)
+[![latest release](https://img.shields.io/github/v/release/terraform-ibm-modules/terraform-ibm-icse-key-management?logo=GitHub&sort=semver)](https://github.com/terraform-ibm-modules/terraform-ibm-icse-key-management/releases/latest)
+[![Renovate enabled](https://img.shields.io/badge/renovate-enabled-brightgreen.svg)](https://renovatebot.com/)
 
 This module creates and manages keys, key rings, and key policies in IBM Hyper Protect Crypto Services or a Key Protect instance. This module is designed to be used as part of a larger architecture.
 
@@ -23,7 +24,7 @@ This module supports these three patterns for a key management instance.
 ```terraform
 module icse-key-management {
   # Replace "main" with a GIT release version to lock into a specific release
-  source                    = "git::https://github.com/terraform-ibm-modules/terraform-ibm-icse-key-management-module.git?ref=main"
+  source                    = "git::https://github.com/terraform-ibm-modules/terraform-ibm-icse-key-management.git?ref=main"
   region                    = "us-south"
   prefix                    = "my-prefix"
   tags                      = ["icse", "cloud-services"]
