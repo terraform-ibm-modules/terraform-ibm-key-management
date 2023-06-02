@@ -24,7 +24,7 @@ This module supports these three patterns for a key management instance.
 ```terraform
 module icse-key-management {
   # Replace "main" with a GIT release version to lock into a specific release
-  source                    = "git::https://github.com/terraform-ibm-modules/terraform-ibm-icse-key-management-module.git?ref=main"
+  source                    = "git::https://github.com/terraform-ibm-modules/terraform-ibm-icse-key-management.git?ref=main"
   region                    = "us-south"
   prefix                    = "my-prefix"
   tags                      = ["icse", "cloud-services"]
