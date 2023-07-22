@@ -93,21 +93,21 @@ No permissions are needed to run this module.
 - [ Default example](examples/default)
 <!-- END EXAMPLES HOOK -->
 <!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
-## Requirements
+### Requirements
 
 | Name | Version |
 |------|---------|
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >=1.3.0 |
 | <a name="requirement_ibm"></a> [ibm](#requirement\_ibm) | >=1.49.0 |
 
-## Modules
+### Modules
 
 | Name | Source | Version |
 |------|--------|---------|
 | <a name="module_key_map"></a> [key\_map](#module\_key\_map) | ./config_modules/list_to_map | n/a |
 | <a name="module_policies_map"></a> [policies\_map](#module\_policies\_map) | ./config_modules/list_to_map | n/a |
 
-## Resources
+### Resources
 
 | Name | Type |
 |------|------|
@@ -120,7 +120,7 @@ No permissions are needed to run this module.
 | [ibm_resource_instance.hpcs_instance](https://registry.terraform.io/providers/IBM-Cloud/ibm/latest/docs/data-sources/resource_instance) | data source |
 | [ibm_resource_instance.kms](https://registry.terraform.io/providers/IBM-Cloud/ibm/latest/docs/data-sources/resource_instance) | data source |
 
-## Inputs
+### Inputs
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
@@ -135,7 +135,7 @@ No permissions are needed to run this module.
 | <a name="input_use_data"></a> [use\_data](#input\_use\_data) | Use existing Key Protect instance. | `bool` | `false` | no |
 | <a name="input_use_hs_crypto"></a> [use\_hs\_crypto](#input\_use\_hs\_crypto) | Use HyperProtect Crypto Services. HPCS cannot be initialized in this module. | `bool` | `false` | no |
 
-## Outputs
+### Outputs
 
 | Name | Description |
 |------|-------------|
