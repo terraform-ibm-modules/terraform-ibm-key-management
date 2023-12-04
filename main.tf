@@ -21,6 +21,7 @@ resource "ibm_resource_instance" "kms" {
   location          = var.region
   resource_group_id = var.resource_group_id
   tags              = var.tags
+  service_endpoints = var.service_endpoints
 }
 
 data "ibm_resource_instance" "kms" {
